@@ -1,0 +1,97 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <style>
+      body {
+         font-family: Verdana;
+     }
+     h1, h2, h3 {
+         color: darkblue;
+     }
+     .rating-circle {
+         height: 2em;
+         width: 2em;
+         border: .1em solid black;
+         border-radius: 1.1em;
+         display: inline-block;
+         margin: 0;
+         padding: .1em;
+     }
+
+     .rating-hover {
+         background-color: yellow;
+     }
+
+     .rating-chosen {
+         background-color: green;
+     }
+ </style>
+</head>
+<body>
+   <h1>Contoso Web Developer Conference</h1>
+   <h2>Finding elements using jQuery</h2>
+   <div>This session is about identifying elements using jQuery methods and selectors.</div>
+   <h3>Rate this session</h3>
+   <div id="rating-container" max-value="5"></div>
+
+   <div>
+      <label for="max-value">Enter max value:</label>
+      <input type="text" id="max-value" />
+      <button type="button" id="update-max-value">Update max value</button>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  <script>
+        // your answer would go here
+        var $element = null;
+        var max_val = 5;
+        var $rating = $('<div class="rating-circle"></div>');
+
+        $('#update-max-value').click(function() {
+            max_val = $('#max-value').val();
+        });
+
+        $('#update-max-value').click(function() {
+            $('#rating-container').empty();
+            for (var i = 0; i < max_val; i++) {
+                $('#rating-container').append($rating.clone());
+            };
+        });
+
+        $(document).on('mouseenter', '.rating-circle', function() {
+            if ($element != null) {
+                $element.prevAll().addBack().each(function() {
+                    $(this).removeClass('rating-chosen')
+                });
+            };
+
+            $(this).prevAll().addBack().each(function() {
+                $(this).addClass('rating-hover')
+            });
+        });
+
+        for (var i = 0; i < max_val; i++) {
+            $('#rating-container').append($rating.clone());
+        };
+
+        $(document).on('mouseout', '.rating-circle', function() {
+            $('div.rating-circle').each(function() {
+                $(this).removeClass('rating-hover')
+            });
+            if ($element != null) {
+                $element.prevAll().addBack().each(function() {
+                    $(this).addClass('rating-chosen')
+                });
+            };
+        });
+
+        $(document).on('click', '.rating-circle', function() {
+            $element = $(this);
+            $(this).prevAll().addBack().each(function() {
+                $(this).addClass('rating-chosen')
+            });
+        });
+    </script>
+</body>
+</html>
