@@ -50,9 +50,6 @@
 
         $('#update-max-value').click(function() {
             max_val = $('#max-value').val();
-        });
-
-        $('#update-max-value').click(function() {
             $('#rating-container').empty();
             for (var i = 0; i < max_val; i++) {
                 $('#rating-container').append($rating.clone());
